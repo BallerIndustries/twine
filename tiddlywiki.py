@@ -485,6 +485,9 @@ class Tiddler: # pylint: disable=old-style-class
         output += u"\n" + self.text + u"\n\n\n"
         return output
 
+    def isFrenzoo(self):
+        return 'Sound' in self.tags or 'AnimationChange' in self.tags or 'Failure' in self.tags
+
     def isImage(self):
         return 'Twine.image' in self.tags
 

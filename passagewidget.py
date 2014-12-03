@@ -445,6 +445,10 @@ class PassageWidget(object):
         # Use default colours
         if self.passage.isAnnotation():
             ind = 'annotation'
+
+        elif self.passage.isFrenzoo():
+            ind = 'colorFrenzoo'
+
         elif self.passage.isImage():
             ind = 'imageTitleBar'
         elif any(t.startswith('Twine.') for t in self.passage.tags):
@@ -840,6 +844,7 @@ class PassageWidget(object):
                'connectorDisplay': (132, 164, 189),
                'connectorResource': (110, 112, 107),
                'connectorAnnotation': (0, 0, 0),
+               'colorFrenzoo': (255, 174, 201),
             }
     FLAT_COLORS = {
                'frame': (0, 0, 0),
@@ -858,7 +863,8 @@ class PassageWidget(object):
                'connectorDisplay': (137, 193, 235),
                'connectorResource': (186, 188, 185),
                'connectorAnnotation': (255, 255, 255),
-               'selection': (28, 102, 176)
+               'selection': (28, 102, 176),
+               'colorFrenzoo': (255, 174, 201),
             }
     DIMMED_ALPHA = 0.5
     FLAT_DIMMED_ALPHA = 0.9
