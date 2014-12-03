@@ -1081,7 +1081,11 @@ class StoryPanelContext(wx.Menu):
 
         newPassage = wx.MenuItem(self, wx.NewId(), 'New Sound Here')
         self.AppendItem(newPassage)
-        self.Bind(wx.EVT_MENU, lambda e: self.newWidget(e, text = "Enjoy some text.", tags = ['Sound']), id = newPassage.GetId())
+        self.Bind(wx.EVT_MENU, lambda e: self.newWidget(e, text = "filename=\"\"", tags = ['Sound']), id = newPassage.GetId())
+
+        newPassage = wx.MenuItem(self, wx.NewId(), 'New Animation Change Here')
+        self.AppendItem(newPassage)
+        self.Bind(wx.EVT_MENU, lambda e: self.newWidget(e, text = "character_name=\"\"\nanimation_id=\"\"", tags = ['AnimationChange']), id = newPassage.GetId())
 
         # ORIGINAL CODE
         self.AppendSeparator()
