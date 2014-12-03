@@ -10,14 +10,14 @@ from version import versionString
 class App(wx.App):
     """This bootstraps our application and keeps track of preferences, etc."""
 
-    NAME = 'Twine'
+    NAME = "ANGUS CHENG'S HYPER TWINE"
     VERSION = '%s (running on %s %s)' % (versionString, platform.system(), platform.release()) #Named attributes not available in Python 2.6
     RECENT_FILES = 10
 
     def __init__(self, redirect = False):
         """Initializes the application."""
         wx.App.__init__(self, redirect = redirect)
-        locale.setlocale(locale.LC_ALL, '')
+        #locale.setlocale(locale.LC_ALL, '')
         self.stories = []
         self.loadPrefs()
         self.determinePaths()
@@ -218,6 +218,10 @@ class App(wx.App):
     def openForum(self, event = None):
         """Opens the forum."""
         wx.LaunchDefaultBrowser('http://twinery.org/forum/')
+
+    def openAngusSite(self, event = None):
+        """Opens Angus's Website"""
+        wx.LaunchDefaultBrowser('http://www.ballerindustries.com')
 
     def openDocs(self, event = None):
         """Opens the online manual."""

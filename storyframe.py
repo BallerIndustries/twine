@@ -366,6 +366,9 @@ class StoryFrame(wx.Frame):
 
         helpMenu = wx.Menu()
 
+        helpMenu.Append(StoryFrame.HELP_ANGUS, "Angus's Website")
+        self.Bind(wx.EVT_MENU, self.app.openAngusSite, id=StoryFrame.HELP_ANGUS)
+
         helpMenu.Append(StoryFrame.HELP_MANUAL, 'Twine &Wiki')
         self.Bind(wx.EVT_MENU, self.app.openDocs, id=StoryFrame.HELP_MANUAL)
 
@@ -1291,7 +1294,7 @@ You can also include URLs of .tws and .twee files, too.
     [BUILD_VERIFY, BUILD_TEST, BUILD_TEST_HERE, BUILD_BUILD, BUILD_REBUILD, BUILD_VIEW_LAST, BUILD_AUTO_BUILD] = range(
         601, 608)
 
-    [HELP_MANUAL, HELP_GROUP, HELP_GITHUB, HELP_FORUM] = range(701, 705)
+    [HELP_MANUAL, HELP_GROUP, HELP_GITHUB, HELP_FORUM, HELP_ANGUS] = range(701, 706)
 
     # tooltip labels
 
