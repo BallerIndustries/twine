@@ -1070,37 +1070,65 @@ class StoryPanelContext(wx.Menu):
         self.parent = parent
         self.pos = pos
 
+        # Initial text formats for these sepecial nodes.
+        NPC_MESSAGE_TEMPLATE = self.createFormat(['trigger_offset', 'trigger_range', 'text'])
+        PROFILE_PICTURE_TEMPLATE = self.createFormat(['trigger_offset', 'trigger_range', 'filename', 'description'])
+        PICTURE_MESSAGE_TEMPLATE = self.createFormat(['trigger_offset', 'trigger_range', 'filename', 'description'])
+        AUDIO_MESSAGE_TEMPLATE = self.createFormat(['trigger_offset', 'trigger_range', 'filename', 'description'])
+        CONVERSATION_CHANGE_TEMPLATE = ""
+        STATUS_UPDATE_TEMPLATE = self.createFormat(['trigger_offset', 'trigger_range', 'text'])
+        PROFILE_TEMPLATE = self.createFormat(['initial_pic_filename', 'initial_stauts', 'biography_text'])
+
+        # Tags for special nodes.
+        NPC_MESSAGE_TAGS = ['NpcMessage']
+        PROFILE_PICTURE_TAGS = ['ProfilePicture']
+        PICTURE_MESSAGE_TAGS = ['PictureMessage']
+        AUDIO_MESSAGE_TAGS = ['AudioMessage']
+        CONVERSATION_CHANGE_TAGS = ['ConversationChange']
+        STATUS_UPDATE_TAGS = ['StatusUpdate']
+        PROFILE_TAGS = ['Profile']
+
         if self.parent.parent.menus.IsEnabled(wx.ID_PASTE):
             pastePassage = wx.MenuItem(self, wx.NewId(), 'Paste Passage Here')
             self.AppendItem(pastePassage)
             self.Bind(wx.EVT_MENU, lambda e: self.parent.pasteWidgets(self.getPos()), id = pastePassage.GetId())
 
-        newPassage = wx.MenuItem(self, wx.NewId(), 'New Passage Here')
+        newPassage = wx.MenuItem(self, wx.NewId(), 'New NPC Message')
         self.AppendItem(newPassage)
-        self.Bind(wx.EVT_MENU, self.newWidget, id = newPassage.GetId())
+        self.Bind(wx.EVT_MENU, lambda e: self.newWidget(e, text = NPC_MESSAGE_TEMPLATE, tags = NPC_MESSAGE_TAGS), id = newPassage.GetId())
 
-        newPassage = wx.MenuItem(self, wx.NewId(), 'New Sound Here')
+        newPassage = wx.MenuItem(self, wx.NewId(), 'New Profile Picture Change')
         self.AppendItem(newPassage)
-        self.Bind(wx.EVT_MENU, lambda e: self.newWidget(e, text = "filename=\"\"", tags = ['Sound']), id = newPassage.GetId())
-
-        newPassage = wx.MenuItem(self, wx.NewId(), 'New Animation Change Here')
+        self.Bind(wx.EVT_MENU, lambda e: self.newWidget(e, text = PROFILE_PICTURE_TEMPLATE, tags = PROFILE_PICTURE_TAGS), id = newPassage.GetId())
+        
+        newPassage = wx.MenuItem(self, wx.NewId(), 'New Picture Message')
         self.AppendItem(newPassage)
-        self.Bind(wx.EVT_MENU, lambda e: self.newWidget(e, text = "character_name=\"\"\nanimation_id=\"\"", tags = ['AnimationChange']), id = newPassage.GetId())
-
-        # ORIGINAL CODE
-        self.AppendSeparator()
-
-        newPassage = wx.MenuItem(self, wx.NewId(), 'New Stylesheet Here')
+        self.Bind(wx.EVT_MENU, lambda e: self.newWidget(e, text = PICTURE_MESSAGE_TEMPLATE, tags = PICTURE_MESSAGE_TAGS), id = newPassage.GetId())
+        
+        newPassage = wx.MenuItem(self, wx.NewId(), 'New Audio Message')
         self.AppendItem(newPassage)
-        self.Bind(wx.EVT_MENU, lambda e: self.newWidget(e, text = StoryPanel.FIRST_CSS, tags = ['stylesheet']), id = newPassage.GetId())
-
-        newPassage = wx.MenuItem(self, wx.NewId(), 'New Script Here')
+        self.Bind(wx.EVT_MENU, lambda e: self.newWidget(e, text = AUDIO_MESSAGE_TEMPLATE, tags = AUDIO_MESSAGE_TAGS), id = newPassage.GetId())
+        
+        newPassage = wx.MenuItem(self, wx.NewId(), 'New Conversation Change')
         self.AppendItem(newPassage)
-        self.Bind(wx.EVT_MENU, lambda e: self.newWidget(e, tags = ['script']), id = newPassage.GetId())
-
-        newPassage = wx.MenuItem(self, wx.NewId(), 'New Annotation Here')
+        self.Bind(wx.EVT_MENU, lambda e: self.newWidget(e, text = CONVERSATION_CHANGE_TEMPLATE, tags = CONVERSATION_CHANGE_TAGS), id = newPassage.GetId())
+        
+        newPassage = wx.MenuItem(self, wx.NewId(), 'New Status')
         self.AppendItem(newPassage)
-        self.Bind(wx.EVT_MENU, lambda e: self.newWidget(e, tags = ['annotation']), id = newPassage.GetId())
+        self.Bind(wx.EVT_MENU, lambda e: self.newWidget(e, text = STATUS_UPDATE_TEMPLATE, tags = STATUS_UPDATE_TAGS), id = newPassage.GetId())
+
+        newPassage = wx.MenuItem(self, wx.NewId(), 'New Profile')
+        self.AppendItem(newPassage)
+        self.Bind(wx.EVT_MENU, lambda e: self.newWidget(e, text = PROFILE_TEMPLATE, tags = PROFILE_TAGS), id = newPassage.GetId())
+
+    def createFormat(self, array):
+        retString = "";
+
+        for attribute in array:
+            retString += attribute
+            retString += '=""\n'
+
+        return retString
 
     def getPos(self):
         pos = self.pos
