@@ -655,17 +655,19 @@ class StoryPanel(wx.ScrolledWindow):
         return pixScroll
 
     def untitledName(self, base = 'Untitled Passage'):
-        """Returns a string for an untitled PassageWidget."""
-        number = 1
+        number = len(self.widgetDict)
+        returnName = "%s %s" % (base, str(number))
 
-        if not base.startswith('Untitled ') and base not in self.widgetDict:
-            return base
+        while returnName in self.widgetDict:
+            number += 1
+            returnName = "%s %s" % (base, str(number))
 
-        for widget in self.widgetDict.itervalues():
-            match = re.match(re.escape(base) + ' (\d+)', widget.passage.title)
-            if match: number = int(match.group(1)) + 1
+        return returnName
 
-        return base + ' ' + str(number)
+
+
+
+
 
     def eachWidget(self, function):
         """Runs a function on every passage in the panel."""
