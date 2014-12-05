@@ -93,7 +93,7 @@ class StoryPanel(wx.ScrolledWindow):
                 type = "Untitled " + tags[0].capitalize()
             else:
                 type = "Untitled Passage"
-            title = self.untitledName(type)
+            title = self.untitledName()
         if not pos: pos = StoryPanel.INSET
         if not logicals: pos = self.toLogical(pos)
 
@@ -184,7 +184,7 @@ class StoryPanel(wx.ScrolledWindow):
                 if not logicals: pos = self.toLogical(pos)
 
                 for widget in data:
-                    newPassage = PassageWidget(self, self.app, state = widget, pos = pos, title = self.untitledName(widget['passage'].title))
+                    newPassage = PassageWidget(self, self.app, state = widget, pos = pos, title = self.untitledName())
                     newPassage.findSpace()
                     newPassage.setSelected(True, False)
                     self.widgetDict[newPassage.passage.title] = newPassage
@@ -654,13 +654,13 @@ class StoryPanel(wx.ScrolledWindow):
 
         return pixScroll
 
-    def untitledName(self, base = 'Untitled Passage'):
+    def untitledName(self, base = 'Node_'):
         number = len(self.widgetDict)
-        returnName = "%s %s" % (base, str(number))
+        returnName = "%s%s" % (base, str(number))
 
         while returnName in self.widgetDict:
             number += 1
-            returnName = "%s %s" % (base, str(number))
+            returnName = "%s%s" % (base, str(number))
 
         return returnName
 
